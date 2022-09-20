@@ -69,6 +69,7 @@ local mobs_on_floor = {
         "Wolf",
         "Hermit Crab",
         "Earthen Crab",
+        "Earthen Boar",
         "Bear",
         "Ruin Knight",
         "Draconite",
