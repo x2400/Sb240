@@ -1,4 +1,3 @@
-
 -- loadfile('Scriptz/sb2 script.lua')()
 -- loadstring(game:HttpGet('https://raw.githubusercontent.com/noobscripter38493/Swordburst-2/main/script.lua'))()
 if getgenv().SB2Script then
@@ -42,17 +41,14 @@ local firesignal = firesignal or getconnections and function(signal, args)
 end
 local request = (syn and syn.request) or (fluxus and fluxus.request) or request
 
-if syn then -- fix weird error on synapse v3
-    local _, isv3 = identifyexecutor()
-    if isv3 == "5bcbba6" then
-        local old; old = hookfunc(writefile, function(a, b)
-            if a:match("SB2 Script | OneTaPuXd on v3rm") then
-                return
-            end
-            
-            return old(a, b)
-        end)
-    end
+if syn and checkcallstack then
+    local old; old = hookfunc(writefile, function(a, b)
+        if a:match("SB2 Script | OneTaPuXd on v3rm") then
+            return
+        end
+
+        return old(a, b)
+    end)
 end
 
 local teleport_execute = queue_on_teleport or (fluxus and fluxus.queue_on_teleport) or (syn and syn.queue_on_teleport)
@@ -1685,7 +1681,7 @@ do
     plr.CharacterAdded:Connect(goinvisible)
 
     Character_tab:AddToggle({
-        Name = "Invisibility (only u can see u)",
+        Name = "Invisibility (INVISIBLE TO EVERYONE BUT URSELF)",
         Default = false,
         Callback = function(bool)
             invisibility = bool
@@ -1733,7 +1729,9 @@ do
         Name = "WalkSpeed Toggle",
         Default = false,
         Callback = function(bool)
+            humanoid.WalkSpeed = 20
             settings.speed = bool
+            
             while settings.speed do
                 humanoid.WalkSpeed = walkspeed
                 task.wait()
@@ -2170,11 +2168,11 @@ do
         credits:AddButton({
             Name = "copy v3rm thread to clipboard",
             Callback = function()
-                setclipboard("Focus")
+                setclipboard("https://v3rmillion.net/showthread.php?tid=1172798")
             end
         })
     else
-        credits:AddParagraph("v3rm url", "Your Ass LOL")
+        credits:AddParagraph("v3rm url", "https://v3rmillion.net/member.php?action=profile&uid=1229592")
     end
 
     if request then
@@ -2185,7 +2183,7 @@ do
                     Url = "http://127.0.0.1:6463/rpc?v=1",
                     Method = "POST",
                     Headers = {
-                        ["Content-Type"] = "application",
+                        ["Content-Type"] = "application/json",
                         ["Origin"] = "https://discord.com"
                     },
                     Body = HttpS:JSONEncode({
